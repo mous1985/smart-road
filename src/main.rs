@@ -425,25 +425,16 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
                 }
 
                 //TCHECKER QUI RALENTIT PAR RAPPORT A QUI ET GENERER L4ECART DE VITESSE POUR ACCELERER ET PASS2 DEVANT SI BESOIN OU NE PAS RALENTIR SI L4AUTRE RALENTIT DEJA PAR RAPPORT A CELLE CI
-                //let mut priority_collision = Car::new(Direction::Up, Voie::Droite, 0, 0);
-                //let mut need_break = false;
+                
 
                 for car_collision in &collision_with {
                     for col_point in &car_collision.1 {
 
-                        /*let car_d = a_car.distance_to_end_intersection(*col_point);
-                        let other_d = car_collision.0.distance_to_end_intersection(*col_point);
-                        let sep_d = car_d - other_d;
-                        if sep_d >= 0 {
-                            car_dist_col.push((car_collision.0.number, sep_d));
-                        }*/
+                       
 
                         for prio_col_point in &priority_collision_zone {
                             if col_point == prio_col_point  && *col_point != 0 {
-                                //let ratio_car: f64 = a_car.speed as f64 / car_collision.0.speed as f64;
-                                //let ratio_other_car: f64 = car_collision.0.speed as f64 / a_car.speed as f64;
-                                //let mut car_dist: i32 = (a_car.distance_to_end_intersection(*col_point) as f64 * ratio_other_car) as i32; //* (car_collision.0.speed/a_car.speed);
-                                //let mut prio_dist: i32 = (car_collision.0.distance_to_end_intersection(*col_point) as f64 * ratio_car) as i32;//* (a_car.speed/car_collision.0.speed);
+                               
                                 let mut prio_col_point: i32 = *col_point;
                                 if car_collision.0.direction == Direction::Up || car_collision.0.direction == Direction::Down {
                                     if *col_point == 6 {
@@ -463,22 +454,9 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
                                 let mut separing_distance: i32 = car_dist - prio_dist;
                                 let mut secu_dist = (2*car_length) + 12;
                                 println!("  1: car dist: {}, other dist: {}, car col point: {}, other col point {}", car_dist, prio_dist, *col_point, prio_col_point);
-                                //if ((a_car.direction == Direction::Up || a_car.direction == Direction::Down) && (car_collision.0.direction == Direction::Up || car_collision.0.direction == Direction::Down))
-                                //|| ((a_car.direction == Direction::Right || a_car.direction == Direction::Left) && (car_collision.0.direction == Direction::Right || car_collision.0.direction == Direction::Left)) {
-                                    if separing_distance < secu_dist && separing_distance > 0 {
+                                                                    if separing_distance < secu_dist && separing_distance > 0 {
                                         println!("2: car number: {}, collision zone: {}, separing distance: {}", a_car.number, col_point, separing_distance);
-                                        /*car_need_slow.push(a_car.number);
-                                        if car_dist < 2*car_length {
-                                            a_car.color = Color::BLACK;
-                                        }
-                                        //if car_dist < car_length + pointille_width {
-                                            //a_car.color = Color::RED;
-                                            //let mut b: Car = *car_collision.0;
-                                            //b.color = Color::RED;
-                                            //car_collision.0.color = Color::RED;
-                                        //}
-                                        //need_break = true;
-                                        //break;*/
+                                       
                                     } else if car_dist == prio_dist {//separing_distance == 0 {
                                         //mettre un partie du ci dessus la dedans
                                         /*println!("SAME DISTANCE QUI EST PRIORITAIRE");
@@ -486,176 +464,24 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
                                             car_need_slow.push(a_car.number);
                                         }*/
                                     }
-                                //} else {
-                                    /*if separing_distance < secu_dist && separing_distance > -secu_dist {
-                                        println!("2: car number: {}, collision zone: {}, separing distance: {}", a_car.number, col_point, separing_distance);
-                                        car_need_slow.push(a_car.number);
-                                        if car_dist < 2*car_length {
-                                            a_car.color = Color::BLACK;
-                                        }
-                                        //if car_dist < car_length + pointille_width {
-                                            //a_car.color = Color::RED;
-                                            //let mut b: Car = *car_collision.0;
-                                            //b.color = Color::RED;
-                                            //car_collision.0.color = Color::RED;
-                                        //}
-                                        //need_break = true;
-                                        //break;
-                                    } else if car_dist == prio_dist {//separing_distance == 0 {
-                                        //mettre un partie du ci dessus la dedans
-                                        println!("SAME DISTANCE QUI EST PRIORITAIRE");
-                                        if i > car_collision.2 {
-                                            car_need_slow.push(a_car.number);
-                                        }
-                                    }*/
-                                //}
-                                /*if separing_distance < secu_dist && separing_distance > 0 {
-                                    println!("2: car number: {}, collision zone: {}, separing distance: {}", a_car.number, col_point, separing_distance);
-                                    car_need_slow.push(a_car.number);
-                                    if car_dist < 2*car_length {
-                                        a_car.color = Color::BLACK;
-                                    }
-                                    //if car_dist < car_length + pointille_width {
-                                        //a_car.color = Color::RED;
-                                        //let mut b: Car = *car_collision.0;
-                                        //b.color = Color::RED;
-                                        //car_collision.0.color = Color::RED;
-                                    //}
-                                    //need_break = true;
-                                    //break;
-                                } else if car_dist == prio_dist {//separing_distance == 0 {
-                                    //mettre un partie du ci dessus la dedans
-                                    println!("SAME DISTANCE QUI EST PRIORITAIRE");
-                                    if i > car_collision.2 {
-                                        car_need_slow.push(a_car.number);
-                                    }
-                                }*/
+                                
                             }
                         }
-                        /*if car_need_slow.len() != 0 {
-                            println!("");
-                        }*/
-                        /*if need_break {
-                            break;
-                        }*/
+                        
                     }
-                    /*if need_break {
-                        break;
-                    }*/
-                    /*for a_collision in &priority_collision_zone {
-                        if car_collision.1 == *a_collision {
-                            priority_collision = car_collision.0;
-                            break;
-                        }
-                    }*/
-                    /*if priority_collision.number != 0 {
-                        let mut car_dist = a_car.distance_to_end_intersection(car_collision.1);
-                        let mut prio_dist = priority_collision.distance_to_end_intersection(car_collision.1);
-                        // si l'autre voiture est prioritaire, si sa vitesse est inferieur à la mienne je me met à sa vitesse, 
-                        //if prio_dist < car_dist {
-                            //if priority_collision.speed < a_car.speed {
-                                //a_car.speed = priority_collision.speed;
-                            //}
-                        //}
-                        //println!("car_d: {}, prio_d: {}", car_dist, prio_dist);
-                        /*if car_dist < 0 {
-                            car_dist *= -1;
-                        }
-                        if prio_dist < 0 {
-                            prio_dist *= -1;
-                        }*/
-                        //prio_dist est le point zero, separing distance est la distance entre a_car et le point zero
-                        let mut separing_distance: i32 = car_dist - prio_dist;
-                        /*let mut separing_distance: i32 = 0;
-                        if car_dist > prio_dist {
-                        //if i > car_collision.2 {
-                            separing_distance = prio_dist - car_dist;
-                        } else {
-                            separing_distance = car_dist - prio_dist;
-                        }*/
-                        let mut secu_dist = (2*car_length) + 12;
-                        /*if a_car.voie == Voie::Centre {
-                            secu_dist = car_length + 12;
-                        } else {
-                            secu_dist = 2*car_length + 12;
-                        }*/
-                        if separing_distance < secu_dist && separing_distance > 0 {//&& car_dist >= 0 {//&& prio_dist >= 0 {//&& separing_distance > -(car_length + 25) {
-                            println!("car number: {}, collision zone: {}, separing distance: {}", a_car.number, car_collision.1, separing_distance);
-                           // if car_dist > prio_dist {
-                                car_need_slow.push(a_car.number);
-                                if car_dist < car_length + pointille_width {
-                                    a_car.color = Color::RED;
-                                }
-                                break;
-                            /*} else if prio_dist > car_dist {
-                                car_need_slow.push(priority_collision.number);
-                                /*println!("priority_collision ralentit");
-                                //collision.0 ralentit
-                                if priority_collision.speed > 1 {
-
-                                    priority_collision.speed -= 2;
-                                }*/
-                                break;*/
-                            /*} else {
-                                if i > car_collision.2 {
-                                    car_need_slow.push(a_car.number);
-                                    /*if a_car.speed > 1 {
-                                        a_car.speed -= 2;
-                                    }*/
-                                }/* else {
-                                    car_need_slow.push(priority_collision.number);
-                                    /*if priority_collision.speed > 1 {
-                                        priority_collision.speed -= 2;
-                                    }*/
-                                }*/
-                                break;
-                            }*/
-                        } else if separing_distance == 0 {
-                            //mettre un partie du ci dessus la dedans
-                            println!("SAME DISTANCE QUI EST PRIORITAIRE");
-                            if i > car_collision.2 {
-                                car_need_slow.push(a_car.number);
-                            }
-                        }/* else {
-                            a_car.max_speed();
-                        }*/
-                        //tcheck hitbox
-                        /*if car_dist < 52 && car_dist > 0 {
-                            if separing_distance < secu_dist && separing_distance > 0 {
-                                a_car.color = Color::RED;
-                            }
-                        }*/
-                    }*/
+                    
                 }
-                /*if priority_collision.number == 0 {
-                    a_car.max_speed();
-                }*/
+                
             }
-        /*} else {
-            a_car.max_speed();
-        }*/
+       
         if a_car.distance_to_end_intersection(0) < 0 {
-            //a_car.max_speed();
-            //car_passed_intersection_bool = true;
-            //car_passed_intersection = a_car;
+            
             out_car_passed_arr.push(a_car);
         } else {
             car_priority.push(a_car);
-            /*let mut prioryti_copy = Vec::<Car>::new();
-            let mut have_append = false;
-            for ordened_car in &car_priority {
-                if a_car.distance_to_end_intersection(0) < ordened_car.distance_to_end_intersection(0)  && !have_append{
-                    prioryti_copy.push(a_car);
-                    have_append = true;
-                }
-                prioryti_copy.push(*ordened_car);
-            }
-            if !have_append {
-                prioryti_copy.push(a_car);
-            }
-            car_priority = prioryti_copy;*/
+           
         }
-        //previous_car = a_car;
+       
     }
 
     //selectionner la first car de chaque voie
@@ -677,18 +503,8 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
         }
         if first {
             first_car = a_car.number;
-            /*for other_car in &car_priority {m
-                //let a = *a_car;
-                let col_point = a_car.where_collision_zone(*other_car);
-                for col_zone in &col_point {
-                    if *col_zone != 0 {
-                        let car_dist = a_car.distance_to_end_intersection(*col_zone);
-                        let other_dist = other_car.distance_to_end_intersection(*col_zone);
-                        let sep_dist = other_dist - car_dist;
-                        if sep_dist < 2*car_length + 12 && sep_dist > 0 {
-                            car_need_slow.push(other_car.number);
-                        }
-                        // si other_car atteint le point de collision avant a_car et est prioritaire,
+           
+                       /*  // si other_car atteint le point de collision avant a_car et est prioritaire,
                         // si une autre voiture est prioritaire sur other_car et ainsi de suite pour trouver la vrai priorité,
                         // cela devrait finir sur une recursion qui revient parfois sur a_car qui en ce cas est prioritaire.
                         if sep_dist <= 0 {
@@ -707,17 +523,9 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
                                             // third_car devient prioritaire si elle n'a pas de collision sinon rechercher la voiture prioritaire sur third_car,
                                             // si l'on retourne sur l'une des voitures precédente (a_car, other_car, etc..) la priorité revient à cette voiture.
                                             etc...
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                      
             }*/
-            //a_car.max_speed();
-            //a_car.color = Color::GREEN;
-            //break;
+            
         }
     }
 
@@ -727,26 +535,11 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
             a_car.color = Color::GREEN;
         } else {
             a_car.min_speed();
-            /*let mut have_slow = false;
-            for car_number in &car_need_slow {
-                if a_car.number == *car_number {
-                    a_car.min_speed();
-                    a_car.color = Color::RED;
-                    /*if a_car.speed > 1 {
-                        a_car.speed -= 2;
-                    }*/
-                    have_slow = true;
-                }
-            }
-            if !have_slow {
-                a_car.max_speed();
-                a_car.color = Color::BLUE;
-            }*/
+           
         }
     }
-    //println!("{} car number", i);
+   
     return (car_priority, out_car_passed_arr)
-    //return (car_priority, car_passed_intersection_bool, car_passed_intersection)
 }
 
 pub fn arr_contains(arr: Vec::<i32>, number: i32) -> bool {
@@ -758,12 +551,3 @@ pub fn arr_contains(arr: Vec::<i32>, number: i32) -> bool {
     return false;
 }
 
-/*pub fn do_slow_other_car(car_arr: &Vec::<Car>, car_number: i32) {
-    for &(mut a_car) in car_arr {
-        if a_car.number != car_number {
-            if a_car.speed > 1 {
-                a_car.speed -= 2;
-            }
-        }
-    }
-}*/
