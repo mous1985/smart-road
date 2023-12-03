@@ -5,31 +5,18 @@ extern crate rand;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
-//use sdl2::Sdl;
-//use sdl2::VideoSubsystem;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
-//use sdl2::render::RenderTarget;
-
 use sdl2::rect::Rect;
 use std::time::Duration;
 use std::time::Instant;
-//use std::env::set_var;
-//use std::time::{Duration, Instant};
 pub mod cars;
-//use crate::cars::Coordonnees;
 use crate::cars::Rectangle;
 use crate::cars::Car;
-//use crate::cars::cars;
 use crate::cars::pointille_width;
 use crate::cars::pointille_length;
 use crate::cars::voie_width;
-//use crate::cars::voie_length;
 use crate::cars::road_width;
-//use crate::cars::road_length;
-//use crate::cars::carrefour_start;
-//use crate::cars::carrefour_end;
-//use crate::cars::car_width;
 use crate::cars::car_length;
 pub mod road;
 use crate::road::Direction;
@@ -39,16 +26,8 @@ use crate::road::Voie;
 const WINDOW_WIDTH: i32 = 1000;
 const WINDOW_HEIGHT: i32 = 1000;
 
-/*fn generate_random_number() -> i32 {
-    let mut rng = rand::thread_rng();
-    let number = rng.gen_range(1..=3);
-    number
-}*/
-
-//pub static mut cars: Vec<Car> = Vec::<Car>::new();
 
 fn main() {
-    //env::set_var("RUST_BACKTRACE", "1");
     let roads = vec![
         Rectangle::new(500, 0, road_width, 1000),
         Rectangle::new(500-road_width, 0, road_width, 1000),
@@ -110,12 +89,9 @@ fn main() {
     let mut cars_priority = Vec::<Car>::new();
     let mut cars_passed_intersection = Vec::<Car>::new();
     let mut now = Instant::now();
-    //set_var("RUST_BACKTRACE", "1");
     while running {
-        //std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         let elapsed_time = now.elapsed();
         if elapsed_time > Duration::from_millis(16) {
-            //println!("{} fps, {} car number, {} usize", 1000 / elapsed_time.as_millis(), cars_priority.len(), cars_priority.len() as usize);
             now = Instant::now();
 
             // event handling
@@ -123,9 +99,6 @@ fn main() {
             for event in sdl_context.event_pump().unwrap().poll_iter() {
                 event_number += 1;
                 let voi = Voie::rand();
-                //let voi = Voie::Centre;
-                // read all events from window
-                //let s = String::from("aaaaa");
                 match event {
                     Event::Quit { .. } => {
                         running = false;
@@ -137,7 +110,6 @@ fn main() {
                     }
                     Event::KeyDown { keycode: Some(sdl2::keyboard::Keycode::Up), .. } => {
                         if cars_priority.len() < 200 {
-                            //unsafe { cars.push(Car::new(Direction::Up)); };
                             if voi == Voie::Droite {
                                 let i = cars_last_position(&cars_passed_intersection, Direction::Up, voi);
                                 let new_car = Car::new(Direction::Up, voi, i, car_number);
@@ -145,19 +117,14 @@ fn main() {
                             } else {
                                 let i = cars_last_position(&cars_priority, Direction::Up, voi);
                                 let new_car = Car::new(Direction::Up, voi, i, car_number);
-                                //cars_priority = cars_insert_by_priority(cars_priority, new_car);
                                 cars_priority.push(new_car);
                                 println!("{}", new_car.number);
                             }
                             car_number += 1;
-                            //cars.push(a_car);
-                            //cars.push(Car::new(Direction::Up, voi, i));
-                            //break;
-                        } 
+                                                    } 
                     }
                     Event::KeyDown { keycode: Some(sdl2::keyboard::Keycode::Down), .. } => { 
                         if cars_priority.len() < 200 {
-                            //unsafe { cars.push(Car::new(Direction::Down)); };
                             if voi == Voie::Droite {
                                 let i = cars_last_position(&cars_passed_intersection, Direction::Down, voi);
                                 let new_car = Car::new(Direction::Down, voi, i, car_number);
@@ -165,40 +132,31 @@ fn main() {
                             } else {
                                 let i = cars_last_position(&cars_priority, Direction::Down, voi);
                                 let new_car = Car::new(Direction::Down, voi, i, car_number);
-                                //cars_priority = cars_insert_by_priority(cars_priority, new_car);
                                 cars_priority.push(new_car);
                                 println!("{}", new_car.number);
                             }
                             car_number += 1;
-                            //cars.push(a_car);
-                            //cars.push(Car::new(Direction::Down, voi, i));
-                            //break;
+                            
                         }
                     }
                     Event::KeyDown { keycode: Some(sdl2::keyboard::Keycode::Right), .. } => { 
                         if cars_priority.len() < 200 {
                             if voi == Voie::Droite {
-                                //unsafe { cars.push(Car::new(Direction::Right)); };
                                 let i = cars_last_position(&cars_passed_intersection, Direction::Right, voi);
                                 let new_car = Car::new(Direction::Right, voi, i, car_number);
                                 cars_passed_intersection.push(new_car);
                             } else {
-                                //unsafe { cars.push(Car::new(Direction::Right)); };
                                 let i = cars_last_position(&cars_priority, Direction::Right, voi);
                                 let new_car = Car::new(Direction::Right, voi, i, car_number);
-                                //cars_priority = cars_insert_by_priority(cars_priority, new_car);
                                 cars_priority.push(new_car);
                                 println!("{}", new_car.number);
                             }
                             car_number += 1;
-                            //cars.push(a_car);
-                            //cars.push(Car::new(Direction::Right, voi, i));
-                            //break;
+                            
                         }
                     }
                     Event::KeyDown { keycode: Some(sdl2::keyboard::Keycode::Left), .. } => { 
                         if cars_priority.len() < 200 {
-                            //unsafe { cars.push(Car::new(Direction::Left)); };
                             if voi == Voie::Droite {
                                 let i = cars_last_position(&cars_passed_intersection, Direction::Left, voi);
                                 let new_car = Car::new(Direction::Left, voi, i, car_number);
@@ -206,22 +164,17 @@ fn main() {
                             } else {
                                 let i = cars_last_position(&cars_priority, Direction::Left, voi);
                                 let new_car = Car::new(Direction::Left, voi, i, car_number);
-                                //cars_priority = cars_insert_by_priority(cars_priority, new_car);
                                 cars_priority.push(new_car);
                                 println!("{}, {}", new_car.number, cars_priority.len());
                             }
                             car_number += 1;
-                            //cars.push(a_car);
-                            //cars.push(Car::new(Direction::Left, voi, i));
-                            //break;
+                            
                         }
                     }
                     _ => {}
                 }
             }
-            //println!("{} car number, {} event number", cars_priority.len(), event_number);
 
-            // draw the screen
             canvas.set_draw_color(Color::RGB(0, 0, 0));
             canvas.clear();
             canvas.set_draw_color(Color::RGB(90, 90, 90));
@@ -236,17 +189,11 @@ fn main() {
                 canvas.fill_rect(Rect::new(a_voie_separateur.position.x, a_voie_separateur.position.y, a_voie_separateur.width as u32, a_voie_separateur.height as u32));
             };
     
-            //let (car_priority_returned, passed, a_passed_car) = cars_distribute_by_priority(cars_priority);
             (cars_priority, cars_passed_intersection) = cars_distribute_by_priority(cars_priority, cars_passed_intersection);
-            //println!("{} car number, after priority", cars_priority.len());
-            /*if passed {
-                cars_passed_intersection.push(a_passed_car);
-            }*/
     
             cars_priority = cars_to_screen(cars_priority, &mut canvas);
             cars_passed_intersection = cars_to_screen(cars_passed_intersection, &mut canvas);
-            //println!("{} car number, after draw", cars_priority.len());
-            //println!("");
+            
             canvas.present();
             
         }
@@ -255,7 +202,7 @@ fn main() {
 
 pub fn cars_to_screen(car_arr: Vec<Car>, canvas: &mut Canvas<Window>) -> Vec<Car> {
     let mut running_cars = Vec::<Car>::new();
-    //unsafe {
+   
         for mut a_car in car_arr {
             if a_car.in_screen() {
                 canvas.set_draw_color(a_car.color);
@@ -266,8 +213,7 @@ pub fn cars_to_screen(car_arr: Vec<Car>, canvas: &mut Canvas<Window>) -> Vec<Car
                 running_cars.push(a_car);
             };
         };
-    //};
-    //unsafe { cars = running_cars; };
+    
     return running_cars
 }
 
@@ -341,10 +287,7 @@ pub fn cars_last_position(car_arr: &Vec<Car>, dir: Direction, voi: Voie) -> i32 
 pub fn cars_insert_by_priority(car_arr: Vec<Car>, new_car: Car) -> Vec<Car> {
     let mut car_priority = Vec::<Car>::new();
     let distance_to_end_new_car = new_car.distance_to_end_intersection(0);
-    /*if car_arr.len() == 0 {
-        car_priority.push(new_car);
-        return car_priority
-    }*/
+    
     let mut have_add = false;
     let mut start_len = car_arr.len();
     for a_car in car_arr {
@@ -365,28 +308,17 @@ pub fn cars_insert_by_priority(car_arr: Vec<Car>, new_car: Car) -> Vec<Car> {
 pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) -> (Vec<Car>, Vec<Car>) {  //-> (Vec<Car>, bool, Car) {
     let mut car_priority = Vec::<Car>::new();
     let mut out_car_passed_arr = car_passed_arr;
-    //let mut car_passed_intersection_bool: bool = false;
-    //let mut car_passed_intersection: Car = Car::new(Direction::Up, Voie::Droite, 0);
-
     let mut car_need_slow = Vec::<i32>::new();
-    //let mut all_dist_col = Vec::<(i32, (i32, i32))>::new();//(car_number, (other_car_number, separing_distance))
-    //let mut previous_car: Car = Car::new(Direction::Up, Voie::Droite, 0, 0);
     let mut i: i32 = 0;
     for &(mut a_car) in &car_arr {
         i += 1;
-        //let mut car_dist_col = Vec::new();
-        //if i > 1 {
-            // collision_with contient une liste de tuple (car_collisioned, collision_zone)
+        
             let mut okay: bool = true;
             for a_previous_car in &car_arr {
                 if a_previous_car.direction == a_car.direction && a_previous_car.voie == a_car.voie {
-                    //if a_previous_car.speed < a_car.speed {
                         let mut separing_distance: i32 = 0;
-                        //if a_car.direction == Direction::Up || a_car.direction == Direction::Left {
                             separing_distance = a_car.distance_to_end_intersection(0) - a_previous_car.distance_to_end_intersection(0);
-                        //} else if a_car.direction == Direction::Down || a_car.direction == Direction::Right {
-                            //separing_distance = a_previous_car.distance_to_end_intersection(0) - a_car.distance_to_end_intersection(0);
-                        //}
+                        
                         let mut secu_dist = 0;
                         if a_car.turned || a_previous_car.turned {
                             secu_dist = 2*car_length;
@@ -395,12 +327,11 @@ pub fn cars_distribute_by_priority(car_arr: Vec<Car>, car_passed_arr: Vec<Car>) 
                         }
                         if separing_distance < secu_dist && separing_distance > 0 {
                             car_need_slow.push(a_car.number);
-                            //car_dist_col.push((a_previous_car.number, separing_distance));
-                            //a_car.speed = a_previous_car.speed;
+                            
                             okay = false;
                             break;
                         }
-                    //}
+                  
                 }
             }
             if okay {
